@@ -1,0 +1,12 @@
+.DS_Store
+
+*.elc
+.dir-locals.el
+
+.projectile
+projectile.cache
+projectile-bookmarks.eld
+
+.cache
+
+data
