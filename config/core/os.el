@@ -17,7 +17,8 @@
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t)))
 
 (use-package exec-path-from-shell
-  :if (and os-is-mac (display-graphic-p))
+  :if (and os-is-mac (or (display-graphic-p)
+                         (daemonp)))
   :init
   (setq exec-path-from-shell-check-startup-files nil)
   :config
