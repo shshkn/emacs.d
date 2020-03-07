@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=emacs-org-capture
+Exec=/usr/bin/env XLIB_SKIP_ARGB_VISUALS=1 {PATH}/emacsclient --create-frame --alternate-editor="" --frame-parameters='((name . "org-capture") (width . 100) (height . 35))' %u
+Icon={ICON}
+Type=Application
+NoDisplay=true
+MimeType=x-scheme-handler/org-protocol;
