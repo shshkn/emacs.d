@@ -253,6 +253,9 @@
 (global-set-key [C-down-mouse-2] #'ignore)
 (global-set-key [C-down-mouse-3] #'ignore)
 
+;; Set M-` to cycle through frames
+(global-set-key (kbd "M-`") #'other-frame)
+
 ;; Unbind suspend-emacs/frame
 (global-set-key (kbd "C-z") nil)
 (global-set-key (kbd "C-x C-z") nil)
