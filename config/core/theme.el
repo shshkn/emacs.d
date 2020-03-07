@@ -60,12 +60,14 @@ The hook is called with the selected theme and color as arguments."
 (defun light ()
   "Switch to the light color theme."
   (interactive)
-  (set-theme-light ds--theme-light))
+  (unless (eq ds--theme-current-color 'light)
+    (set-theme-light ds--theme-light)))
 
 (defun dark ()
   "Switch to the dark color theme."
   (interactive)
-  (set-theme-dark ds--theme-dark))
+  (unless (eq ds--theme-current-color 'dark)
+    (set-theme-dark ds--theme-dark)))
 
 (defun ds--load-last-used-theme ()
   (ds--theme-enable-theme ds--theme-current-theme ds--theme-current-color))
