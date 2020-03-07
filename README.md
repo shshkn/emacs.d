@@ -23,3 +23,6 @@ Install dependencies (this pulls quite a lot of things)
 ``` shell
 ~/.emacs.d/scripts/deps.sh
 ```
+
+### Extra
+[Emacs client on macOS](./docs/macOS.md)
