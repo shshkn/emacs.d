@@ -32,6 +32,8 @@
   (setq langtool-http-server-host "localhost"
         langtool-http-server-port 8010))
 
+(use-package memory-usage)
+
 ;; TODO: pdf-tools workaround
 ;; https://github.com/politza/pdf-tools/issues/18#issuecomment-532175227
 (use-package pdf-tools
