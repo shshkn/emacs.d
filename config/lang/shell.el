@@ -1,5 +1,8 @@
-(define-key sh-mode-map (kbd "C-c C-c") nil)
-(define-key sh-mode-map (kbd "C-c C-f") nil)
+(use-package sh-script
+  :ensure nil
+  :bind (:map sh-mode-map
+              ("C-c C-c" . nil)
+              ("C-c C-f" . nil)))
 
 (use-package flymake-shellcheck
   :hook ((sh-mode .  flymake-mode)
