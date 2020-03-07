@@ -120,3 +120,18 @@
                 flymake-diagnostics-buffer-mode-hook
                 use-package-statistics-mode-hook))
   (add-hook hook #'ds--custom-set-helper-buffer-face-hook-fn))
+
+;; Watch for macOS appearance changes
+(defun ds--macos-watcher-start ()
+  "Starts watcher. Returns timer."
+  (when os-is-mac
+    (run-with-timer 0 300 #'ds--macos-theme-check)))
+
+(defun ds--macos-theme-check ()
+  (async-start (lambda ()
+                 (shell-command "defaults read -g AppleInterfaceStyle"))
+               (lambda (exit-code)
+                 (if (eq 1 exit-code) (light) (dark)))))
+
+(setq ds--macos-theme-watcher-timer (ds--macos-watcher-start))
+;; (cancel-timer ds--macos-theme-watcher-timer)
