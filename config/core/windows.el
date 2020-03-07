@@ -47,5 +47,26 @@
   (interactive)
   (delete-side-window 'bottom))
 
+(defun ds-frame-move-to-center (&optional frame)
+  (let* ((mon-x (car (frame-monitor-attribute 'geometry frame)))
+         (mon-y (cadr (frame-monitor-attribute 'geometry frame)))
+         (mon-width (caddr (frame-monitor-attribute 'geometry frame)))
+         (mon-height (cadddr (frame-monitor-attribute 'geometry frame)))
+         (frame-x (+ (/ (- mon-width (frame-pixel-width)) 2) mon-x))
+         (frame-y (+ (/ (- mon-height (frame-pixel-height)) 2) mon-y)))
+    (set-frame-position frame frame-x frame-y)))
+
+(defun ds--frame-move-and-resize-default (&optional frame)
+  (when (display-graphic-p frame)
+    (set-frame-size frame 135 35 nil)
+    (run-with-timer 0 nil #'ds-frame-move-to-center frame)))
+
+(defun ds--frame-daemon-move-and-resize-default-hook-fn (&optional frame)
+  (when (daemonp)
+    (ds--frame-move-and-resize-default frame)))
+
+(add-hook 'desktop-no-desktop-file-hook #'ds--frame-move-and-resize-default)
+(add-hook 'after-make-frame-functions #'ds--frame-daemon-move-and-resize-default-hook-fn)
+
 (global-set-key (kbd "C-c w w") #'delete-window)
 (global-set-key (kbd "C-c w q") #'ds/delete-window-bottom)
