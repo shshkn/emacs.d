@@ -36,7 +36,7 @@
   :hook (after-init . counsel-mode)
   :diminish counsel-mode
   :bind (("C-c g" . counsel-rg)
-         ("C-c C-f" . counsel-fzf)
+         ("C-x f" . counsel-fzf)
          ([remap execute-extended-command] . counsel-M-x)
          ([remap find-file] . counsel-find-file)
          ([remap switch-to-buffer] . ivy-switch-buffer)
