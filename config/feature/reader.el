@@ -1,7 +1,7 @@
 (use-package nov
   :mode ("\\.epub$" . nov-mode)
   :init
-  (setq nov-text-width t
+  (setq nov-text-width nil
         nov-save-place-file (expand-file-name "nov-places" ds-dir-data-user))
   :config
   (defun ds--setup-nov ()
