@@ -17,7 +17,7 @@
         doom-themes-enable-bold nil))
 
 (defun update-cursor-hook-fn (&optional theme color)
-  (set-cursor-color "#FFAA00"))
+  (run-with-idle-timer 0 nil #'set-cursor-color "#FFAA00"))
 (add-hook 'ds-after-theme-enable-hook #'update-cursor-hook-fn)
 (add-hook 'after-make-frame-functions #'update-cursor-hook-fn)
 (add-hook 'server-after-make-frame-hook #'update-cursor-hook-fn)
