@@ -13,19 +13,17 @@
                                  font-size))))
 
 (defun ds--font-update-font (font-family font-size)
-  (let* ((fspec (font-spec
-                 :family font-family
-                 :size font-size
-                 :weight 'normal)))
-    (if (find-font fspec)
-        (progn
-          (set-frame-font fspec t t)
-          (set-face-attribute 'mode-line nil :font fspec)
-          (set-face-attribute 'fixed-pitch nil :font fspec)
-          (ds--font-set-default-frame-alist font-family font-size)
-          (customize-save-variable 'ds--font-family font-family)
-          (customize-save-variable 'ds--font-size font-size))
-      (set-frame-font (font-spec :size font-size) t t))))
+  (let ((fspec (font-spec
+                :family font-family
+                :size font-size
+                :weight 'normal)))
+    (when (find-font fspec)
+      (set-frame-font fspec t t)
+      (set-face-attribute 'mode-line nil :font fspec)
+      (set-face-attribute 'fixed-pitch nil :font fspec)
+      (ds--font-set-default-frame-alist font-family font-size)
+      (customize-save-variable 'ds--font-family font-family)
+      (customize-save-variable 'ds--font-size font-size))))
 
 (defun ds/set-font (font-family font-size)
   "Set font to FONT-FAMILY and FONT-SIZE."
