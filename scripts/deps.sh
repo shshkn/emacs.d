@@ -48,6 +48,7 @@ BREWFILE=(
 # macOS
 if [[ $OSTYPE == darwin* ]]; then
   brew install "${BREWFILE[@]}"
+  source "/usr/local/opt/nvm/nvm.sh"
 fi
 
 # voidlinux
