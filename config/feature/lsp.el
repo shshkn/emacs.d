@@ -50,6 +50,6 @@
 (use-package company-lsp
   :commands company-lsp
   :init
-  (setq company-lsp-cache-candidates 'auto
+  (setq company-lsp-cache-candidates t ;; TODO: cache, otherwise it breaks erlang lsp (?)
         company-lsp-async t
         company-lsp-enable-snippet t))
