@@ -26,12 +26,6 @@
   :config
   (global-company-mode +1))
 
-(use-package company-statistics
+(use-package company-prescient
   :after company
-  :hook (company-mode . company-statistics-mode)
-  :config
-  (setq-default company-statistics-file
-                (expand-file-name
-                 "company-statistics-cache.el"
-                 ds-dir-data-user))
-  (push #'company-sort-by-statistics company-transformers))
+  :hook (company-mode . company-prescient-mode))
