@@ -37,9 +37,12 @@
               ("C-M-<left_bracket>" . sp-select-previous-thing-exchange))
   :init
   (setq sp-show-pair-delay 0
+        sp-show-pair-from-inside t
         sp-max-pair-length 5
         sp-cancel-autoskip-on-backward-movement nil
         sp-highlight-pair-overlay nil)
   :config
   (electric-pair-mode -1)
-  (smartparens-global-mode +1))
+  (show-paren-mode -1)
+  (smartparens-global-mode +1)
+  (show-smartparens-global-mode +1))
