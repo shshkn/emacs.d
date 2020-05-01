@@ -48,6 +48,7 @@ BREWFILE=(
 # macOS
 if [[ $OSTYPE == darwin* ]]; then
   brew install "${BREWFILE[@]}"
+  mkdir -p "$HOME/.nvm"
   source "/usr/local/opt/nvm/nvm.sh"
 fi
 
