@@ -20,6 +20,8 @@ VOIDLINUX=(
   "rustup"
   "erlang" "rebar3"
   "elixir"
+  "openjdk"
+  "kotlin-bin"
 
   "ccls"
   "shellcheck"
@@ -39,6 +41,8 @@ BREWFILE=(
   "rustup-init"
   "erlang" "rebar3"
   "elixir"
+  "openjdk" "openjdk@11"
+  "kotlin"
 
   "ccls"
   "shellcheck"
@@ -106,3 +110,29 @@ mix compile
 mix elixir_ls.release -o "$ELIXIR_LS_DIR"
 rm -rf "$ELIXIR_LS_SRC"
 popd || exit
+
+# Build kotlin-language-server
+KOTLIN_LS_SRC=/tmp/kotlin-ls
+KOTLIN_LS_DIR="$TARGET_DIR/kotlin_ls"
+rm -rf "$KOTLIN_LS_SRC" "$KOTLIN_LS_DIR"
+git clone --depth 1 https://github.com/fwcd/kotlin-language-server "$KOTLIN_LS_SRC"
+pushd "$KOTLIN_LS_SRC" || exit
+PATH="/usr/local/opt/openjdk@11/bin:$PATH" ./gradlew :server:installDist
+mv "$KOTLIN_LS_SRC/server/build/install" "$KOTLIN_LS_DIR"
+rm -rf "$KOTLIN_LS_SRC"
+popd || exit
+
+# Download eclipse jdt
+JAVA_LS_URL="https://download.eclipse.org/jdtls/snapshots/jdt-language-server-latest.tar.gz"
+JAVA_LS_DIST=/tmp/jdt.tar.gz
+JAVA_LS_DIR="$TARGET_DIR/java_ls"
+rm -rf "$JAVA_LS_DIST" "$JAVA_LS_DIR"
+mkdir -p "$JAVA_LS_DIR"
+wget "$JAVA_LS_URL" --output-document "$JAVA_LS_DIST"
+tar xf "$JAVA_LS_DIST" --directory "$JAVA_LS_DIR"
+
+# etc
+if [[ $OSTYPE == darwin* ]]; then
+  echo -e "\n\n \033[0;31m =====NOTE=====\033[0m \n"
+  brew info openjdk | grep -i -B 1 "sudo"
+fi

@@ -53,6 +53,8 @@
     "lang/python.el"
     "lang/javascript.el"
     "lang/web.el"
+    "lang/java.el"
+    "lang/kotlin.el"
     "lang/docker.el"
     ))
 
