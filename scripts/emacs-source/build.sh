@@ -40,8 +40,9 @@ while getopts "B:cbih" opt; do
   esac
 done
 
-SOURCE="$TARGET_DIR/emacs-source-$BRANCH"
-PREFIX="$TARGET_DIR/emacs-bin-$BRANCH"
+BRANCH_SUB=${BRANCH//\//_}
+SOURCE="$TARGET_DIR/emacs-source-$BRANCH_SUB"
+PREFIX="$TARGET_DIR/emacs-bin-$BRANCH_SUB"
 
 INFO=$PREFIX/share/info/emacs
 NS_APP=$PREFIX/bin/Emacs.app
