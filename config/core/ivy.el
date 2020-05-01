@@ -62,15 +62,6 @@
   :config
   (counsel-projectile-mode +1))
 
-(use-package flx
-  :defer t)
-
-(use-package smex
-  :defer t
-  :init
-  (setq-default smex-save-file (expand-file-name "smex" ds-dir-data-user)
-                smex-history-length 35))
-
 (use-package wgrep
   :no-require t)
 
@@ -78,3 +69,17 @@
   :after ivy
   :init
   (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
+
+(use-package prescient
+  :defer t
+  :init
+  (setq prescient-save-file (expand-file-name "prescient-save.el" ds-dir-data-user)
+        prescient-history-length 150
+        prescient-filter-method '(fuzzy))
+  :config
+  (prescient-persist-mode +1))
+
+(use-package ivy-prescient
+  :after counsel
+  :config
+  (ivy-prescient-mode +1))
