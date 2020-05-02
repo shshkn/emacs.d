@@ -16,14 +16,32 @@
          ("C-c w b" . windmove-swap-states-left)))
 
 (use-package ace-window
-  :bind (("C-x o" . ace-window)
-         ("M-o" . ace-window)
-         ("C-M-o" . ace-swap-window))
+  :bind (("C-x o" . ds--aw-show-dispatch-help)
+         ("M-o" . ace-swap-window))
+  :commands (ace-window aw-show-dispatch-help)
   :init
   (setq aw-background t
         aw-scope 'frame
         aw-ignore-on t
-        aw-ignored-buffers '("*Calc Trail*" " *LV*")))
+        aw-ignored-buffers '("*Calc Trail*" " *LV*")
+        aw-keys '(?a ?s ?d ?f ?g)
+        aw-dispatch-alist '((?0 aw-delete-window "delete window")
+                            (?1 delete-other-windows "delete other")
+                            (?2 aw-split-window-vert "split —")
+                            (?3 aw-split-window-horz "split |")
+                            (?4 aw-split-window-fair "split =")
+                            (?x aw-swap-window "swap")
+                            (?m aw-move-window "move")
+                            (?c aw-copy-window "copy")
+                            (?b aw-switch-buffer-other-window "switch buffer")))
+  :config
+  (set-face-attribute 'aw-leading-char-face nil :foreground "#FF5F00" :weight 'bold :height 1.0)
+
+  (defun ds--aw-show-dispatch-help ()
+    (interactive)
+    (if (>= (length (aw-window-list)) 3)
+        (aw-show-dispatch-help)
+      (ace-select-window))))
 
 (use-package shackle
   :init
