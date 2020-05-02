@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (defvar ds--theme-light 'tango)
 (defvar ds--theme-dark 'wombat)
 (defvar ds--theme-current-theme ds--theme-dark)

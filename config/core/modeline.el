@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (defface ds-mode-line-face-fill-column '((t (:inherit error)))
   "Mode line fill column face."
   :group 'ds-mode-line)

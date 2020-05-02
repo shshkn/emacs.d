@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (use-package eshell-toggle
   :bind (("C-c t" . eshell-toggle)
          :map term-mode-map

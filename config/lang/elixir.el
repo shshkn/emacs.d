@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (use-package elixir-mode
   :hook (elixir-mode . ds--lsp-enable)
   :init

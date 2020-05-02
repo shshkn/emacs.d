@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (defun ds--lsp-enable ()
   (when (featurep 'company)
     (company-mode +1))

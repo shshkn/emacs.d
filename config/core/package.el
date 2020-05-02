@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (require 'package)
 
 (defvar ds-dir-packages

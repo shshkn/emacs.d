@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (use-package projectile
   :diminish projectile-mode
   :bind-keymap ("C-c p" . projectile-command-map)

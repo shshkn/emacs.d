@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (use-package dumb-jump
   :bind (("C-c j g" . dumb-jump-go)
          ("C-c j p" . dumb-jump-back)

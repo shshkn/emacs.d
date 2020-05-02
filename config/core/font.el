@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (defvar ds--font-family "monospace"
   "Font family name.")
 

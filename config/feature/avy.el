@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (use-package avy
   :bind (("M-g f" . avy-goto-line)
          ("C-c a" . avy-goto-whitespace-end))

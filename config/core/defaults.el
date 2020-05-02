@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (setq garbage-collection-messages t
       gc-cons-threshold most-positive-fixnum)
 

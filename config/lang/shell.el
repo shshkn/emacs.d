@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (use-package sh-script
   :ensure nil
   :bind (:map sh-mode-map

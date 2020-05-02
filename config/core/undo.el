@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (use-package undo-fu
   :bind (("C-/" . undo-fu-only-undo)
          ("C-S-/" . undo-fu-only-redo)

@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (use-package base16-theme
   :no-require t)
 

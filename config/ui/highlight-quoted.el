@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (use-package highlight-quoted
   :hook ((emacs-lisp-mode
           lisp-mode

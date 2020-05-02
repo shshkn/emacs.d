@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (use-package company
   :defer 1
   :diminish company-mode

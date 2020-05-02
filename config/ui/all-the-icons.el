@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (use-package all-the-icons
   :if (or (display-graphic-p) (daemonp))
   :init

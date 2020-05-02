@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (when os-is-mac
   (use-package dash-at-point
     :bind (("C-c d" . dash-at-point)

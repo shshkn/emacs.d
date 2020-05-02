@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (use-package cc-mode
   :hook (java-mode . ds--lsp-enable)
   :init

@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (use-package smartparens-config
   :ensure smartparens
   :defer 1

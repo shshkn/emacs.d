@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (use-package multiple-cursors
   :bind (("C-c m c" . mc/edit-lines)
          ("C-c m n" . mc/mark-next-like-this)

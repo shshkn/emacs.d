@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (use-package iedit
   :commands iedit-mode
   :bind (("C-;" . iedit-mode)

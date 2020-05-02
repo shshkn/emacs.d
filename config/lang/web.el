@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (use-package sgml-mode
   :hook (html-mode . ds--lsp-enable))
 

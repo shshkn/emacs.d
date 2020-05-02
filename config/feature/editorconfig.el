@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (use-package editorconfig
   :diminish editorconfig-mode
   :hook (prog-mode . editorconfig-mode-apply)

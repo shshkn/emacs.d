@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 ;; NOTE: error: symbol's value is void flyspell-delayed-commands
 (setq-default flyspell-delayed-commands nil)
 

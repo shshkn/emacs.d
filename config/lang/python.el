@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (defun ds--python-init ()
   (setq python-indent-offset 4))
 

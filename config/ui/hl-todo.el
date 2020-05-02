@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (use-package hl-todo
   :defer 3
   :config

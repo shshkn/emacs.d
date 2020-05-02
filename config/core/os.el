@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (defvar os-is-linux (eq system-type 'gnu/linux))
 (defvar os-is-mac (eq system-type 'darwin))
 (defvar os-is-win (eq system-type 'windows-nt))

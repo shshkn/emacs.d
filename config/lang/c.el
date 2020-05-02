@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (defun ds--c-mode-hook-fn ()
   (when (not (featurep 'ccls))
     (require 'ccls))

@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (use-package winner
   :ensure nil
   :demand t

@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (use-package json-mode
   :mode ("\\.js\\(on\\|lintrc\\)" "\\.babelrc$")
   :init

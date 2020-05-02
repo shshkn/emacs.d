@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (use-package imenu-anywhere
   :bind (("C-." . ivy-imenu-anywhere)))
 

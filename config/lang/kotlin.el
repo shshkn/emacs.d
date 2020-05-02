@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (use-package kotlin-mode
   :hook (kotlin-mode . ds--lsp-enable)
   :init

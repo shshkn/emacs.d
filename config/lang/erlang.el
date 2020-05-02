@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (use-package erlang
   :hook (erlang-mode . ds--lsp-enable)
   :init

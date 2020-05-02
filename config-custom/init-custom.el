@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (add-to-list 'load-path ds-dir-config-custom-root)
 (add-to-list 'custom-theme-load-path ds-dir-config-custom-root)
 (load-file (expand-file-name "themes.el" ds-dir-config-custom-root))

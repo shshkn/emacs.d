@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (defvar config-files
   '(
     "core/defaults.el"

@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (use-package crux
   :bind (("C-c C-c C-d" . crux-delete-file-and-buffer)
          ("C-c C-c C-r" . crux-rename-file-and-buffer)

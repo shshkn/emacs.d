@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (use-package rust-mode
   :mode "\\.rs\\'"
   :hook (rust-mode . ds--lsp-enable)

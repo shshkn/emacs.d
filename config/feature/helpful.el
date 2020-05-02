@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (use-package helpful
   :bind (("C-h q" . helpful-kill-buffers)
          ("C-h k" . helpful-key)
