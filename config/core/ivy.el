@@ -52,7 +52,27 @@
   :config
   (ivy-set-display-transformer 'counsel-describe-variable nil)
   (ivy-set-display-transformer 'counsel-describe-function nil)
-  (ivy-set-actions 'counsel-find-file '(("d" delete-file "delete"))))
+
+  (defun ds--counsel-ace-window-action (arg)
+    (let ((aw-dispatch-always t)
+          (fpath (expand-file-name arg counsel--fzf-dir)))
+      (when (>= (length (aw-window-list)) 2)
+        (aw-show-dispatch-help))
+      (find-file-other-window fpath)))
+
+  (let ((file-actions `(("a" ds--counsel-ace-window-action "ace-window")
+                        ("d"
+                         (lambda (arg)
+                           (dired-jump t (expand-file-name arg counsel--fzf-dir)))
+                         "dired other window")
+                        ("D"
+                         (lambda (arg)
+                           (delete-file (expand-file-name arg counsel--fzf-dir))) "delete file")))
+        (file-commands '(counsel-find-file
+                         counsel-fzf
+                         counsel-projectile-find-file)))
+    (dolist (cmd file-commands)
+      (ivy-add-actions cmd file-actions))))
 
 (use-package swiper
   :defer t
