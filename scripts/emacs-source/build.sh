@@ -53,49 +53,47 @@ NS_APP_BIN=$NS_APP/Contents/MacOS/Emacs
 cd "$SOURCE" || exit
 
 function configure_build() {
-  ./autogen.sh &> /dev/null
+  [[ ! -x "$SOURCE/configure"  ]] && ./autogen.sh
+
+  _args=(
+    "-C"
+    "--infodir=${INFO}"
+    "--prefix=${PREFIX}"
+    "--without-all"
+    "--without-pop"
+    "--with-xml2"
+    "--with-json"
+    "--with-rsvg"
+    "--with-gnutls"
+    "--with-threads"
+    "--with-modules"
+  )
 
   case $OSTYPE in
     darwin*)
-      CFLAGS=" $(xml2-config --cflags) $(pkg-config --cflags librsvg-2.0)" \
-            ./configure \
-            -C \
-            --infodir="${INFO}" \
-            --prefix="${PREFIX}" \
-            --without-all \
-            --without-pop \
-            --with-xml2 \
-            --with-json \
-            --with-rsvg \
-            --with-gnutls \
-            --with-threads \
-            --with-ns \
-            --disable-ns-self-contained
+      _args+=("--with-ns"
+              "--enable-ns-self-contained"
+             )
       ;;
     *)
-      ./configure \
-        -C \
-        --infodir="${INFO}" \
-        --prefix="${PREFIX}" \
-        --without-all \
-        --without-pop \
-        --with-xml2 \
-        --with-json \
-        --with-xpm \
-        --with-jpeg \
-        --with-tiff \
-        --with-gif \
-        --with-png \
-        --with-rsvg \
-        --with-libotf \
-        --with-gnutls \
-        --with-threads \
-        --with-x \
-        --with-x-toolkit=no \
-        --with-cairo \
-        --with-harfbuzz
+      _args+=("--with-xpm"
+              "--with-jpeg"
+              "--with-tiff"
+              "--with-gif"
+              "--with-png"
+              "--with-libotf"
+              "--with-x"
+              "--with-x-toolkit=no"
+              "--with-cairo"
+              "--with-harfbuzz"
+             )
       ;;
   esac
+
+  read -ra _features <<< "$FEATURES"
+  _args+=("${_features[@]}")
+
+  ./configure "${_args[@]}"
 }
 
 function build() {
@@ -108,7 +106,11 @@ function build() {
       ;;
   esac
 
-  make -j"$NCPU" install
+  # TEMP:
+  [[ $BYTE_COMPILE_EXTRA_FLAGS ]] && MAKE_FLAGS="$MAKE_FLAGS BYTE_COMPILE_EXTRA_FLAGS='$BYTE_COMPILE_EXTRA_FLAGS'"
+
+  eval make -j"$NCPU" "$MAKE_FLAGS"
+  make install
 }
 
 
