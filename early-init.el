@@ -8,3 +8,6 @@
 (modify-all-frames-parameters '((vertical-scroll-bars . nil)))
 
 (advice-add 'x-apply-session-resources :override 'ignore)
+
+(setq comp-speed 3
+      comp-deferred-compilation nil)
