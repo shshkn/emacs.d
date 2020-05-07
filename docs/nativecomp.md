@@ -9,7 +9,7 @@
 HOMEBREW_NO_AUTO_UPDATE=1 brew install gcc --build-from-source --force
 ```
 
-### Build using [build.sh](scripts/emacs-source/build.sh) script:
+### Build using [build.sh](../scripts/emacs-source/build.sh) script:
 
 ```
 ./deps.sh
@@ -45,7 +45,7 @@ ln -s Resources/lisp lisp
 #### master
 
 | test           | non-gc avg (s) | gc avg (s) | gcs avg | tot avg (s) | tot avg err (s) |
-|----------------+----------------+------------+---------+-------------+-----------------|
+|----------------|----------------|------------|---------|-------------|-----------------|
 | bubble-no-cons |           7.28 |       0.07 |       4 |        7.35 |            0.00 |
 | bubble         |           3.02 |       8.21 |     489 |       11.23 |            0.05 |
 | dhrystone      |           6.93 |       0.00 |       0 |        6.93 |            0.01 |
@@ -55,13 +55,12 @@ ln -s Resources/lisp lisp
 | inclist        |           8.88 |       0.02 |       1 |        8.90 |            0.03 |
 | listlen-tc     |           6.17 |       0.00 |       0 |        6.17 |            0.08 |
 | nbody          |           2.85 |      13.96 |     839 |       16.81 |            0.17 |
-|----------------+----------------+------------+---------+-------------+-----------------|
 | total          |          54.56 |      22.25 |    1333 |       76.81 |            0.20 |
 
 #### feature/native-comp comp-speed 3
 
 | test           | non-gc avg (s) | gc avg (s) | gcs avg | tot avg (s) | tot avg err (s) |
-|----------------+----------------+------------+---------+-------------+-----------------|
+|----------------|----------------|------------|---------|-------------|-----------------|
 | bubble-no-cons |           3.08 |       0.02 |       1 |        3.09 |            0.01 |
 | bubble         |           2.04 |       0.24 |       1 |        2.28 |            0.02 |
 | dhrystone      |           4.08 |       0.00 |       0 |        4.08 |            0.02 |
@@ -71,7 +70,6 @@ ln -s Resources/lisp lisp
 | inclist        |           1.74 |       0.02 |       1 |        1.76 |            0.00 |
 | listlen-tc     |           0.20 |       0.00 |       0 |        0.20 |            0.00 |
 | nbody          |           2.09 |       0.44 |       1 |        2.53 |            0.02 |
-|----------------+----------------+------------+---------+-------------+-----------------|
 | total          |          22.33 |       0.72 |       4 |       23.05 |            0.03 |
 
 ### <https://gitlab.com/koral/elisp-benchmarks>
