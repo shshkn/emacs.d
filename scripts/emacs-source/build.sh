@@ -14,6 +14,9 @@ function usage() {
   echo "    -b build emacs"
   echo "    -i install emacs"
   echo "    -h this help"
+  echo "Environment variables:"
+  echo "    FEATURES - configure Emacs build, override script's defaults"
+  echo '      e.g. FEATURES="--with-ns --disable-ns-self-contained"'
   exit 0
 }
 
