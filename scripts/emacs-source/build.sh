@@ -118,18 +118,18 @@ function build() {
 
 
 function install() {
-  [[ ! -d "$PREFIX/bin" ]] && echo "$PREFIX/bin not found. Build emacs first." && usage
+  [[ ! -d "$PREFIX/bin" ]] && [[ ! -d "$SOURCE/nextstep/Emacs.app" ]] \
+    && echo "$PREFIX/bin or Emacs.app not found. Build emacs first." && usage
 
   echo "Installing..."
   case $OSTYPE in
     darwin*)
-      [[ -d "$NS_APP" ]] && rm -rv "$NS_APP"
+      mkdir -pv "$PREFIX/bin"
+      cp -r "$SOURCE/nextstep/Emacs.app" "$NS_APP" && echo "$NS_APP"
 
-      cp -rv nextstep/Emacs.app "$NS_APP"
-
-      rm -v /usr/local/bin/emacs /usr/local/bin/emacsclient
+      rm /usr/local/bin/emacs /usr/local/bin/emacsclient
       echo $'#!/bin/bash\nexec' "$NS_APP_BIN" '"$@"' >> /usr/local/bin/emacs &&
-        chmod +x /usr/local/bin/emacs
+        chmod -v +x /usr/local/bin/emacs
 
       ln -sfv "$PREFIX/bin/emacsclient" /usr/local/bin/emacsclient
       ;;
