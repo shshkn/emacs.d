@@ -4,9 +4,6 @@
 (add-to-list 'custom-theme-load-path ds-dir-config-custom-root)
 (load-file (expand-file-name "themes.el" ds-dir-config-custom-root))
 
-(add-hook 'desktop-after-read-hook (lambda ()
-                                     (dired-sidebar-show-sidebar)
-                                     (dired-sidebar-follow-file)))
 ;; org-mode
 (setq org-directory "~/sync/notes"
       org-agenda-files '("~/sync/notes/agenda"
