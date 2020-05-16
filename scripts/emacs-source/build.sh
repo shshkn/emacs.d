@@ -51,7 +51,7 @@ INFO=$PREFIX/share/info/emacs
 NS_APP=$PREFIX/bin/Emacs.app
 NS_APP_BIN=$NS_APP/Contents/MacOS/Emacs
 
-[[ ! -d $SOURCE ]] &&  git clone --depth 1 --branch "$BRANCH" "$EMACS_GIT_URL" "$SOURCE"
+[[ ! -d $SOURCE ]] &&  git clone --depth 100 --branch "$BRANCH" "$EMACS_GIT_URL" "$SOURCE"
 
 cd "$SOURCE" || exit
 
