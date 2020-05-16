@@ -110,9 +110,10 @@ function build() {
   esac
 
   # TEMP:
-  [[ $BYTE_COMPILE_EXTRA_FLAGS ]] && MAKE_FLAGS="$MAKE_FLAGS BYTE_COMPILE_EXTRA_FLAGS='$BYTE_COMPILE_EXTRA_FLAGS'"
+  _make_flags=()
+  [[ $BYTE_COMPILE_EXTRA_FLAGS ]] && _make_flags+=("BYTE_COMPILE_EXTRA_FLAGS=$BYTE_COMPILE_EXTRA_FLAGS")
 
-  eval make -j"$NCPU" "$MAKE_FLAGS"
+  make -j"$NCPU" "${_make_flags[@]}"
   make install
 }
 
