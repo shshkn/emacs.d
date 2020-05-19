@@ -9,13 +9,8 @@
   (ds--lsp-company-backends))
 
 (defun ds--lsp-company-backends ()
-  (dolist (backend '(company-lsp
-                     company-capf
-                     company-files
-                     company-yasnippet))
-    (setq-local company-backends (remove backend company-backends)))
-
-  (add-to-list 'company-backends '(company-files company-yasnippet company-lsp)))
+  (setq-local company-backends '(company-files
+                                 (:separate company-yasnippet company-capf))))
 
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
@@ -48,10 +43,3 @@
               ([return] . lsp-ui-peek--goto-xref))
   :init
   (setq lsp-ui-doc-enable nil))
-
-(use-package company-lsp
-  :commands company-lsp
-  :init
-  (setq company-lsp-cache-candidates t ;; TODO: cache, otherwise it breaks erlang lsp (?)
-        company-lsp-async t
-        company-lsp-enable-snippet t))
