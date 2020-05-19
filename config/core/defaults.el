@@ -216,12 +216,16 @@
 (global-subword-mode +1)
 (with-eval-after-load 'diminish (diminish 'subword-mode))
 
-(setq mouse-wheel-scroll-amount '(5
+(setq scroll-step 1
+      scroll-margin 1
+      scroll-conservatively 101
+      scroll-preserve-screen-position t)
+
+(setq mouse-wheel-progressive-speed nil
+      mouse-wheel-scroll-amount '(5
                                   ((shift) . 1)
                                   ((meta) . nil)
                                   ((control) . text-scale)))
-(setq scroll-preserve-screen-position 'always
-      mouse-wheel-progressive-speed nil)
 
 (setq text-scale-mode-step 1.05)
 (global-set-key [C-wheel-down] #'text-scale-decrease)
