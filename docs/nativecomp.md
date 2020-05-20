@@ -34,43 +34,46 @@ cd ./Emacs.app/Contents/
 ln -s Resources/lisp lisp
 ```
 
-## Benchmarks
+## Benchmarks (macOS Catalina 10.15.4)
 
 ### <https://elpa.gnu.org/packages/elisp-benchmarks.html>
 
 ```
-./emacs -batch -l ~/.emacs.d/data/packages/elisp-benchmarks-1.4/elisp-benchmarks.el --eval '(progn (setq comp-speed 3) (elisp-benchmarks-run))' -Q
+./emacs -batch -l ~/.emacs.d/data/packages/elisp-benchmarks-1.5/elisp-benchmarks.el --eval '(progn (setq comp-speed 3) (elisp-benchmarks-run))' -Q
 ```
 
-#### master
+#### master (5352bda4eeb7415ad2bda5d74e007b4f36021e68)
 
 | test           | non-gc avg (s) | gc avg (s) | gcs avg | tot avg (s) | tot avg err (s) |
 |----------------|----------------|------------|---------|-------------|-----------------|
-| bubble-no-cons |           7.28 |       0.07 |       4 |        7.35 |            0.00 |
-| bubble         |           3.02 |       8.21 |     489 |       11.23 |            0.05 |
-| dhrystone      |           6.93 |       0.00 |       0 |        6.93 |            0.01 |
-| fibn-rec       |           6.08 |       0.00 |       0 |        6.08 |            0.00 |
-| fibn-tc        |           5.53 |       0.00 |       0 |        5.53 |            0.01 |
-| fibn           |           7.81 |       0.00 |       0 |        7.81 |            0.02 |
-| inclist        |           8.88 |       0.02 |       1 |        8.90 |            0.03 |
-| listlen-tc     |           6.17 |       0.00 |       0 |        6.17 |            0.08 |
-| nbody          |           2.85 |      13.96 |     839 |       16.81 |            0.17 |
-| total          |          54.56 |      22.25 |    1333 |       76.81 |            0.20 |
+| bubble-no-cons |           6.05 |       0.04 |       4 |        6.09 |            0.27 |
+| bubble         |           2.25 |       4.52 |     494 |        6.77 |            0.08 |
+| dhrystone      |           6.09 |       0.00 |       0 |        6.09 |            0.03 |
+| fibn-rec       |           5.22 |       0.00 |       0 |        5.22 |            0.09 |
+| fibn-tc        |           4.96 |       0.00 |       0 |        4.96 |            0.02 |
+| fibn           |           6.47 |       0.00 |       0 |        6.47 |            0.08 |
+| inclist        |           6.71 |       0.01 |       1 |        6.72 |            0.94 |
+| listlen-tc     |           4.25 |       0.00 |       0 |        4.25 |            0.06 |
+| nbody          |           2.43 |       7.72 |     839 |       10.15 |            0.14 |
+|----------------|----------------|------------|---------|-------------|-----------------|
+| total          |          44.42 |      12.29 |    1338 |       56.71 |            1.00 |
 
-#### feature/native-comp comp-speed 3
+#### feature/native-comp (28df049b8d43586d5a91a7b3e1d9e05131572afc) comp-speed 3
+
 
 | test           | non-gc avg (s) | gc avg (s) | gcs avg | tot avg (s) | tot avg err (s) |
 |----------------|----------------|------------|---------|-------------|-----------------|
-| bubble-no-cons |           3.08 |       0.02 |       1 |        3.09 |            0.01 |
-| bubble         |           2.04 |       0.24 |       1 |        2.28 |            0.02 |
-| dhrystone      |           4.08 |       0.00 |       0 |        4.08 |            0.02 |
-| fibn-rec       |           2.30 |       0.00 |       0 |        2.30 |            0.00 |
-| fibn-tc        |           1.65 |       0.00 |       0 |        1.65 |            0.01 |
-| fibn           |           5.16 |       0.00 |       0 |        5.16 |            0.01 |
-| inclist        |           1.74 |       0.02 |       1 |        1.76 |            0.00 |
-| listlen-tc     |           0.20 |       0.00 |       0 |        0.20 |            0.00 |
-| nbody          |           2.09 |       0.44 |       1 |        2.53 |            0.02 |
-| total          |          22.33 |       0.72 |       4 |       23.05 |            0.03 |
+| bubble-no-cons |           2.28 |       0.01 |       1 |        2.29 |            0.41 |
+| bubble         |           1.38 |       0.16 |       1 |        1.54 |            0.03 |
+| dhrystone      |           3.53 |       0.00 |       0 |        3.53 |            0.18 |
+| fibn-rec       |           1.81 |       0.00 |       0 |        1.81 |            0.43 |
+| fibn-tc        |           1.18 |       0.00 |       0 |        1.18 |            0.10 |
+| fibn           |           3.31 |       0.00 |       0 |        3.31 |            0.07 |
+| inclist        |           1.30 |       0.01 |       1 |        1.31 |            0.04 |
+| listlen-tc     |           0.15 |       0.00 |       0 |        0.15 |            0.01 |
+| nbody          |           1.50 |       0.30 |       1 |        1.80 |            0.10 |
+|----------------|----------------|------------|---------|-------------|-----------------|
+| total          |          16.45 |       0.48 |       4 |       16.92 |            0.64 |
 
 ### <https://gitlab.com/koral/elisp-benchmarks>
 
@@ -80,16 +83,16 @@ git clone --depth 1 https://gitlab.com/koral/elisp-benchmarks /tmp/elisp-benchma
 ```
 
 ```
-nbody.el byte time: 153.293672s native time: 26.492198s boost 478.637046%
-bubble.el byte time: 31.620088s native time: 6.875261s boost 359.911093%
-bubble-no-cons.el byte time: 22.289277s native time: 9.195328s boost 142.397846%
-fibn.el byte time: 23.885029s native time: 15.483257s boost 54.263596%
-fibn-rec.el byte time: 17.812732s native time: 6.963234s boost 155.811193%
-fibn-tc.el byte time: 15.964283s native time: 4.952057s boost 222.376802%
-inclist-tc.el byte time: 16.924912s native time: 1.075107s boost 1474.253725%
-listlen-tc.el byte time: 15.841278s native time: 0.650274s boost 2336.092786%
-inclist-no-type-hints.el byte time: 25.547047s native time: 5.439778s boost 369.634000%
-inclist-type-hints.el byte time: 25.829202s native time: 5.428206s boost 375.833121%
-dhrystone.el byte time: 62.445176s native time: 36.979301s boost 68.865215%
-Total byte time: 133.606350s native time: 39.824325s boost 235.489302%
+nbody.el byte time: 93.925446s native time: 17.844818s boost 426.345777%
+bubble.el byte time: 19.319558s native time: 4.580786s boost 321.752031%
+bubble-no-cons.el byte time: 17.380286s native time: 6.162614s boost 182.027821%
+fibn.el byte time: 20.762802s native time: 9.581598s boost 116.694564%
+fibn-rec.el byte time: 14.922997s native time: 4.793007s boost 211.349368%
+fibn-tc.el byte time: 14.469838s native time: 3.422689s boost 322.762278%
+inclist-tc.el byte time: 14.493542s native time: 0.757761s boost 1812.679856%
+listlen-tc.el byte time: 14.015246s native time: 0.459715s boost 2948.681466%
+inclist-no-type-hints.el byte time: 19.419661s native time: 4.376260s boost 343.750166%
+inclist-type-hints.el byte time: 19.140681s native time: 3.829341s boost 399.842688%
+dhrystone.el byte time: 52.195308s native time: 31.111822s boost 67.766799%
+Total byte time: 97.965531s native time: 28.705556s boost 241.277246%
 ```
