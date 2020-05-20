@@ -49,7 +49,6 @@ PREFIX="$TARGET_DIR/emacs-bin-$BRANCH_SUB"
 
 INFO=$PREFIX/share/info/emacs
 NS_APP=$PREFIX/bin/Emacs.app
-NS_APP_BIN=$NS_APP/Contents/MacOS/Emacs
 
 [[ ! -d $SOURCE ]] &&  git clone --depth 100 --branch "$BRANCH" "$EMACS_GIT_URL" "$SOURCE"
 
@@ -126,13 +125,24 @@ function install() {
   case $OSTYPE in
     darwin*)
       mkdir -pv "$PREFIX/bin"
+
+      rm -r "$NS_APP"
+      rm /usr/local/bin/emacs /usr/local/bin/emacsclient
+
       cp -r "$SOURCE/nextstep/Emacs.app" "$NS_APP" && echo "$NS_APP"
 
-      rm /usr/local/bin/emacs /usr/local/bin/emacsclient
-      echo $'#!/bin/bash\nexec' "$NS_APP_BIN" '"$@"' >> /usr/local/bin/emacs &&
-        chmod -v +x /usr/local/bin/emacs
+      if [[ $FEATURES =~ "--disable-ns-self-contained" ]]; then
+        ln -sfv "$PREFIX/bin/emacs" /usr/local/bin/emacs
+        ln -sfv "$PREFIX/bin/emacsclient" /usr/local/bin/emacsclient
+      else
+        ln -sfv "$NS_APP/Contents/MacOS/Emacs" /usr/local/bin/emacs
+        ln -sfv "$NS_APP/Contents/MacOS/bin/emacsclient" /usr/local/bin/emacsclient
 
-      ln -sfv "$PREFIX/bin/emacsclient" /usr/local/bin/emacsclient
+        echo "Emacs.app is self-contained."
+        echo "If you move it, don't forget to point emacs and emacsclient to"
+        echo "    Emacs.app/Contents/MacOS/Emacs"
+        echo "    Emacs.app/Contents/MacOS/bin/emacsclient"
+      fi
       ;;
     *)
       EMACS_BIN="$PREFIX/bin"
