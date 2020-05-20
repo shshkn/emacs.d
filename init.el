@@ -24,7 +24,6 @@
     "feature/multiple-cursors.el"
     "feature/iedit.el"
     "feature/yasnippet.el"
-    "feature/avy.el"
     "feature/expand-region.el"
     "feature/helpful.el"
     "feature/dash-zeal.el"
