@@ -12,6 +12,19 @@
       (set-face-attribute 'ivy-prompt-match nil :background "#ACACAC")))
   (add-hook 'ds-after-theme-enable-hook #'update-grayscale-theme-faces-hook-fn))
 
+(use-package acme-theme
+  :no-require t
+  :init
+  (defun update-acme-theme-faces-hook-fn (theme color)
+    (when (eq theme 'acme)
+      (set-face-attribute 'org-link nil :underline nil)
+      (set-face-attribute 'org-level-1 nil :overline nil)
+      (set-face-attribute 'org-level-2 nil :overline nil)
+      (set-face-attribute 'org-level-3 nil :overline nil)
+      (set-face-attribute 'org-todo nil :box nil)
+      (set-face-attribute 'org-done nil :box nil)))
+  (add-hook 'ds-after-theme-enable-hook #'update-acme-theme-faces-hook-fn))
+
 (use-package doom-themes
   :no-require t
   :init
@@ -135,5 +148,6 @@
                (lambda (exit-code)
                  (if (eq 1 exit-code) (light) (dark)))))
 
-(setq ds--macos-theme-watcher-timer (ds--macos-watcher-start))
+;; not with "auto"
+;; (setq ds--macos-theme-watcher-timer (ds--macos-watcher-start))
 ;; (cancel-timer ds--macos-theme-watcher-timer)

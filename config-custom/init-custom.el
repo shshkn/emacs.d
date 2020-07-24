@@ -26,6 +26,18 @@
   :config
   (reverse-im-activate "russian-computer"))
 
+(use-package emms
+  :commands emms-play-file
+  :init
+  (setq emms-directory (expand-file-name "emms" ds-dir-data-user))
+  (defun org-emms-play-file (filename link)
+    (emms-play-file filename))
+  (with-eval-after-load 'org
+    (add-to-list 'org-file-apps '("\\.mp3\\'" . org-emms-play-file)))
+  :config
+  (setq emms-player-list (emms-default-players))
+  (emms-minimalistic))
+
 (use-package langtool
   :config
   (setq langtool-http-server-host "localhost"
