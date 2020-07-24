@@ -14,7 +14,7 @@ HOMEBREW_NO_AUTO_UPDATE=1 brew install gcc --build-from-source --force
 ```
 ./deps.sh
 
-CC="clang" LDFLAGS="-L/usr/local/Cellar/gcc/9.3.0_1/lib/gcc/9" \
+LDFLAGS="-L/usr/local/Cellar/gcc/10.1.0/lib/gcc/10/" \
 FEATURES="--with-nativecomp" \
 NATIVE_FAST_BOOT=1 BYTE_COMPILE_EXTRA_FLAGS='--eval "(setq comp-speed 3)"' \
   ./build.sh -B feature/native-comp -c -b -i
