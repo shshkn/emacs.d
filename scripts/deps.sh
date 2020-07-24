@@ -33,6 +33,7 @@ BREWFILE=(
   "aspell"
   "multimarkdown"
 
+  "automake"
   "poppler"
 
   "sbcl"
