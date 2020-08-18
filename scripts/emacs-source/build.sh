@@ -116,7 +116,11 @@ function build() {
 
   # TEMP:
   _make_flags=()
-  [[ $BYTE_COMPILE_EXTRA_FLAGS ]] && _make_flags+=("BYTE_COMPILE_EXTRA_FLAGS=$BYTE_COMPILE_EXTRA_FLAGS")
+
+  if [[ $BRANCH == "feature/native-comp" ]]; then
+    [[ $BYTE_COMPILE_EXTRA_FLAGS ]] && _make_flags+=("BYTE_COMPILE_EXTRA_FLAGS=$BYTE_COMPILE_EXTRA_FLAGS")
+    _make_flags+=("bindir=$SOURCE/nextstep/Emacs.app/Contents/MacOS")
+  fi
 
   make -j"$NCPU" "${_make_flags[@]}"
   make install

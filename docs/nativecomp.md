@@ -27,11 +27,11 @@ You might want to add this to your init.el
       comp-deferred-compilation t)
 ```
 
-#### image not found
-emacs: dlopen(Emacs.app/Contents/MacOS/../lisp/eln-x86_64-apple-darwin19.4.0-95625f7880deb857/custom.eln, 1): image not found
+##### image not found
+emacs: dlopen(...eln-cache..., 1): image not found
 ```
 cd ./Emacs.app/Contents/
-ln -s Resources/lisp lisp
+ln -s ./MacOS/libexec/emacs/VER/ARCH/eln-cache eln-cache
 ```
 
 ## Benchmarks (macOS Catalina 10.15.4)
