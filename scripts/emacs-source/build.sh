@@ -141,8 +141,12 @@ function install() {
         ln -sfv "$PREFIX/bin/emacs" /usr/local/bin/emacs
         ln -sfv "$PREFIX/bin/emacsclient" /usr/local/bin/emacsclient
       else
-        ln -sfv "$NS_APP/Contents/MacOS/Emacs" /usr/local/bin/emacs
-        ln -sfv "$NS_APP/Contents/MacOS/bin/emacsclient" /usr/local/bin/emacsclient
+        echo -e "#!/usr/bin/env zsh\\n\\nexec $NS_APP/Contents/MacOS/Emacs \$@" \
+             > /usr/local/bin/emacs
+        echo -e "#!/usr/bin/env zsh\\n\\nexec $NS_APP/Contents/MacOS/bin/emacsclient \$@" \
+             > /usr/local/bin/emacsclient
+
+        chmod -v u+x /usr/local/bin/emacs /usr/local/bin/emacsclient
 
         echo "Emacs.app is self-contained."
         echo "If you move it, don't forget to point emacs and emacsclient to"
