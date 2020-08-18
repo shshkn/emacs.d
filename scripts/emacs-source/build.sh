@@ -66,6 +66,10 @@ function configure_build() {
     "--with-xml2"
     "--with-json"
     "--with-rsvg"
+    "--with-jpeg"
+    "--with-png"
+    "--with-gif"
+    "--with-tiff"
     "--with-gnutls"
     "--with-threads"
     "--with-modules"
@@ -79,10 +83,6 @@ function configure_build() {
       ;;
     *)
       _args+=("--with-xpm"
-              "--with-jpeg"
-              "--with-tiff"
-              "--with-gif"
-              "--with-png"
               "--with-libotf"
               "--with-x"
               "--with-x-toolkit=no"
