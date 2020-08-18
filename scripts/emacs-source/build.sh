@@ -50,7 +50,13 @@ PREFIX="$TARGET_DIR/emacs-bin-$BRANCH_SUB"
 INFO=$PREFIX/share/info/emacs
 NS_APP=$PREFIX/bin/Emacs.app
 
-[[ ! -d $SOURCE ]] &&  git clone --depth 100 --branch "$BRANCH" "$EMACS_GIT_URL" "$SOURCE"
+if [[ ! -d $SOURCE ]]; then
+  git clone --depth 100 --branch "$BRANCH" "$EMACS_GIT_URL" "$SOURCE"
+else
+  cd "$SOURCE" || exit
+  git clean -fdx
+  git pull
+fi
 
 cd "$SOURCE" || exit
 
