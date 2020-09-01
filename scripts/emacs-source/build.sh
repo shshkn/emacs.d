@@ -79,6 +79,7 @@ function configure_build() {
     "--with-gnutls"
     "--with-threads"
     "--with-modules"
+    "--with-zlib"
   )
 
   case $OSTYPE in
