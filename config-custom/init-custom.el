@@ -76,9 +76,3 @@
   (unless noninteractive  ; as `save-place-mode' does
     (add-hook 'kill-emacs-hook #'brds/pdf-set-all-last-viewed-bookmarks)))
 
-;; TODO: cursor disappears when moving fast
-;; bring back double buffering for now / override core/os.el
-(when os-is-linux
-  (setq default-frame-alist (assoc-delete-all
-                             'inhibit-double-buffering
-                             default-frame-alist)))

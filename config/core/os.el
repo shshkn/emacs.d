@@ -4,9 +4,6 @@
 (defvar os-is-mac (eq system-type 'darwin))
 (defvar os-is-win (eq system-type 'windows-nt))
 
-(when os-is-linux
-  (add-to-list 'default-frame-alist '(inhibit-double-buffering . t)))
-
 (when os-is-mac
   (setq mac-command-modifier 'meta
         mac-option-modifier 'super)

@@ -95,6 +95,7 @@ function configure_build() {
               "--with-x-toolkit=no"
               "--with-cairo"
               "--with-harfbuzz"
+              "--with-xdbe"
              )
       ;;
   esac
