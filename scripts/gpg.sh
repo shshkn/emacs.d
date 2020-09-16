@@ -16,4 +16,4 @@ if command -v gpg2; then
   CMD=gpg2
 fi
 
-$CMD --homedir "$TARGET_DIR" --receive-keys 066DAFCB81E42C40
+$CMD --homedir "$TARGET_DIR" --keyserver eu.pool.sks-keyservers.net --receive-keys 066DAFCB81E42C40
