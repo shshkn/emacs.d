@@ -76,3 +76,6 @@
   (unless noninteractive  ; as `save-place-mode' does
     (add-hook 'kill-emacs-hook #'brds/pdf-set-all-last-viewed-bookmarks)))
 
+;; Select next frame / 60% kbd
+(global-set-key (kbd "M-<escape>") #'other-frame)
+(global-set-key (kbd "M-~") #'other-frame)
