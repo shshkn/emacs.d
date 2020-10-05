@@ -6,7 +6,8 @@
 
 ;; org-mode
 (setq org-directory "~/sync/notes"
-      org-agenda-files '("~/sync/notes/agenda"
+      org-agenda-files '("~/sync/notes/"
+                         "~/sync/notes/agenda/"
                          "~/workspace/todo.org"))
 
 (setq org-capture-templates

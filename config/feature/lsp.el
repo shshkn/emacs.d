@@ -18,14 +18,11 @@
   (setq lsp-keymap-prefix "C-c l"
         lsp-log-io nil
         lsp-auto-configure t
-        lsp-auto-require-clients nil
-        lsp-prefer-flymake t
         lsp-restart 'interactive
         lsp-session-file (expand-file-name "lsp-session" ds-dir-data-user)
         lsp-auto-guess-root nil
         lsp-keep-workspace-alive nil
         lsp-eldoc-render-all nil
-        lsp-signature-auto-activate t
         lsp-signature-render-documentation nil
         lsp-enable-imenu t
         lsp-enable-snippet t)

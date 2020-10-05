@@ -17,12 +17,13 @@
   :init
   (defun update-acme-theme-faces-hook-fn (theme color)
     (when (eq theme 'acme)
-      (set-face-attribute 'org-link nil :underline nil)
-      (set-face-attribute 'org-level-1 nil :overline nil)
-      (set-face-attribute 'org-level-2 nil :overline nil)
-      (set-face-attribute 'org-level-3 nil :overline nil)
-      (set-face-attribute 'org-todo nil :box nil)
-      (set-face-attribute 'org-done nil :box nil)))
+      (when (facep 'org-link)
+        (set-face-attribute 'org-link nil :underline nil)
+        (set-face-attribute 'org-level-1 nil :overline nil)
+        (set-face-attribute 'org-level-2 nil :overline nil)
+        (set-face-attribute 'org-level-3 nil :overline nil)
+        (set-face-attribute 'org-todo nil :box nil)
+        (set-face-attribute 'org-done nil :box nil))))
   (add-hook 'ds-after-theme-enable-hook #'update-acme-theme-faces-hook-fn))
 
 (use-package doom-themes
