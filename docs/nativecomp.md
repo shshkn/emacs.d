@@ -1,24 +1,54 @@
 # [gccemacs](http://akrl.sdf.org/gccemacs.html "gccemacs")
 
 ## macOS
-[Discussion about building process](https://gist.github.com/mikroskeem/0a5c909c1880408adf732ceba6d3f9ab)
 
-### Compile libgccjit:
-[apply patch to gcc formula](https://gist.github.com/mikroskeem/0a5c909c1880408adf732ceba6d3f9ab#1-gcc-with-libgccjit-enabled)
 ```
-HOMEBREW_NO_AUTO_UPDATE=1 brew install gcc --build-from-source --force
+brew install libgccjit
+
+brew --prefix libgccjit
 ```
 
-### Build using [build.sh](../scripts/emacs-source/build.sh) script:
+## GNU/Linux
+
+[build libgccjit](https://gcc.gnu.org/onlinedocs/jit/internals/index.html#working-on-the-jit-library)
+
+```
+GCC_VERSION=$(gcc -dumpversion)
+PREFIX="$HOME/.local/gcc-$GCC_VERSION"
+
+git clone --depth 1 --branch releases/gcc-"$GCC_VERSION" git://gcc.gnu.org/git/gcc.git "$PREFIX/src"
+
+cd "$PREFIX/src"
+
+./configure \
+    --enable-languages=jit \
+    --enable-host-shared \
+    --enable-checking=release \
+    --disable-bootstrap \
+    --disable-multilib \
+    --prefix="$PREFIX" \
+    --build="$(gcc -dumpmachine)"
+
+make -j"$(nproc)"
+make install-strip
+```
+
+## Build using [build.sh](../scripts/emacs-source/build.sh) script:
+
+Adjust paths to libgccjit
 
 ```
 ./deps.sh
 
-LDFLAGS="-L/usr/local/Cellar/gcc/10.2.0/lib/gcc/10/" \
+CFLAGS="-O2 -I/usr/local/opt/libgccjit/include" \
+LDFLAGS="-L/usr/local/opt/libgccjit/lib/gcc/10" \
+LD_LIBRARY_PATH="/usr/local/opt/libgccjit/lib/gcc/10" \
 FEATURES="--with-nativecomp" \
-NATIVE_FAST_BOOT=1 BYTE_COMPILE_EXTRA_FLAGS='--eval "(setq comp-speed 3)"' \
+BYTE_COMPILE_EXTRA_FLAGS='--eval "(setq comp-speed 3)"' \
   ./build.sh -B feature/native-comp -c -b -i
 ```
+
+Use `NATIVE_FULL_AOT=1` for full AOT compilation
 
 You might want to add this to your init.el
 
@@ -34,65 +64,52 @@ cd ./Emacs.app/Contents/
 ln -s ./MacOS/libexec/emacs/VER/ARCH/eln-cache eln-cache
 ```
 
-## Benchmarks (macOS Catalina 10.15.4)
+## Benchmarks (macOS Big Sur)
 
-### <https://elpa.gnu.org/packages/elisp-benchmarks.html>
-
-```
-./emacs -batch -l ~/.emacs.d/data/packages/elisp-benchmarks-1.5/elisp-benchmarks.el --eval '(progn (setq comp-speed 3) (elisp-benchmarks-run))' -Q
-```
-
-#### master (5352bda4eeb7415ad2bda5d74e007b4f36021e68)
-
-| test           | non-gc avg (s) | gc avg (s) | gcs avg | tot avg (s) | tot avg err (s) |
-|----------------|----------------|------------|---------|-------------|-----------------|
-| bubble-no-cons |           6.05 |       0.04 |       4 |        6.09 |            0.27 |
-| bubble         |           2.25 |       4.52 |     494 |        6.77 |            0.08 |
-| dhrystone      |           6.09 |       0.00 |       0 |        6.09 |            0.03 |
-| fibn-rec       |           5.22 |       0.00 |       0 |        5.22 |            0.09 |
-| fibn-tc        |           4.96 |       0.00 |       0 |        4.96 |            0.02 |
-| fibn           |           6.47 |       0.00 |       0 |        6.47 |            0.08 |
-| inclist        |           6.71 |       0.01 |       1 |        6.72 |            0.94 |
-| listlen-tc     |           4.25 |       0.00 |       0 |        4.25 |            0.06 |
-| nbody          |           2.43 |       7.72 |     839 |       10.15 |            0.14 |
-|----------------|----------------|------------|---------|-------------|-----------------|
-| total          |          44.42 |      12.29 |    1338 |       56.71 |            1.00 |
-
-#### feature/native-comp (28df049b8d43586d5a91a7b3e1d9e05131572afc) comp-speed 3
-
-
-| test           | non-gc avg (s) | gc avg (s) | gcs avg | tot avg (s) | tot avg err (s) |
-|----------------|----------------|------------|---------|-------------|-----------------|
-| bubble-no-cons |           2.28 |       0.01 |       1 |        2.29 |            0.41 |
-| bubble         |           1.38 |       0.16 |       1 |        1.54 |            0.03 |
-| dhrystone      |           3.53 |       0.00 |       0 |        3.53 |            0.18 |
-| fibn-rec       |           1.81 |       0.00 |       0 |        1.81 |            0.43 |
-| fibn-tc        |           1.18 |       0.00 |       0 |        1.18 |            0.10 |
-| fibn           |           3.31 |       0.00 |       0 |        3.31 |            0.07 |
-| inclist        |           1.30 |       0.01 |       1 |        1.31 |            0.04 |
-| listlen-tc     |           0.15 |       0.00 |       0 |        0.15 |            0.01 |
-| nbody          |           1.50 |       0.30 |       1 |        1.80 |            0.10 |
-|----------------|----------------|------------|---------|-------------|-----------------|
-| total          |          16.45 |       0.48 |       4 |       16.92 |            0.64 |
-
-### <https://gitlab.com/koral/elisp-benchmarks>
+<https://elpa.gnu.org/packages/elisp-benchmarks.html>
 
 ```
-git clone --depth 1 https://gitlab.com/koral/elisp-benchmarks /tmp/elisp-benchmarks
-./emacs -batch -l /tmp/elisp-benchmarks/elisp-benchmark.el --eval '(progn (setq comp-speed 3) (setq comp-native-path-postfix nil) (elb-run))' -Q
+./emacs -batch -l ~/.emacs.d/data/packages/elisp-benchmarks-1.8/elisp-benchmarks.el --eval '(progn (setq comp-speed 3) (elisp-benchmarks-run))' -Q
 ```
 
-```
-nbody.el byte time: 93.925446s native time: 17.844818s boost 426.345777%
-bubble.el byte time: 19.319558s native time: 4.580786s boost 321.752031%
-bubble-no-cons.el byte time: 17.380286s native time: 6.162614s boost 182.027821%
-fibn.el byte time: 20.762802s native time: 9.581598s boost 116.694564%
-fibn-rec.el byte time: 14.922997s native time: 4.793007s boost 211.349368%
-fibn-tc.el byte time: 14.469838s native time: 3.422689s boost 322.762278%
-inclist-tc.el byte time: 14.493542s native time: 0.757761s boost 1812.679856%
-listlen-tc.el byte time: 14.015246s native time: 0.459715s boost 2948.681466%
-inclist-no-type-hints.el byte time: 19.419661s native time: 4.376260s boost 343.750166%
-inclist-type-hints.el byte time: 19.140681s native time: 3.829341s boost 399.842688%
-dhrystone.el byte time: 52.195308s native time: 31.111822s boost 67.766799%
-Total byte time: 97.965531s native time: 28.705556s boost 241.277246%
-```
+#### master (0a5a1adab986de39a147771b8f9aa21656ecc001)
+
+| test               | non-gc avg (s) | gc avg (s) | gcs avg | tot avg (s) | tot avg err (s) |
+|--------------------|----------------|------------|---------|-------------|-----------------|
+| bubble-no-cons     |           5.38 |       0.05 |       4 |        5.42 |            0.01 |
+| bubble             |           2.19 |       5.35 |     485 |        7.54 |            0.02 |
+| dhrystone          |           5.58 |       0.00 |       0 |        5.58 |            0.02 |
+| fibn-rec           |           4.61 |       0.00 |       0 |        4.61 |            0.12 |
+| fibn-tc            |           4.27 |       0.00 |       0 |        4.27 |            0.07 |
+| fibn               |           6.32 |       0.00 |       0 |        6.32 |            0.02 |
+| flet               |           6.96 |       0.00 |       0 |        6.96 |            0.07 |
+| inclist-type-hints |           8.06 |       0.01 |       1 |        8.07 |            0.07 |
+| inclist            |           6.72 |       0.01 |       1 |        6.74 |            0.62 |
+| listlen-tc         |           3.91 |       0.00 |       0 |        3.91 |            0.01 |
+| map-closure        |           6.48 |       0.00 |       0 |        6.48 |            0.06 |
+| nbody              |           2.36 |       9.92 |     899 |       12.28 |            0.02 |
+| pcase              |           6.32 |       0.00 |       0 |        6.32 |            0.03 |
+| pidigits           |           5.96 |       8.58 |     457 |       14.54 |            0.39 |
+|--------------------|----------------|------------|---------|-------------|-----------------|
+| total              |          75.11 |      23.92 |    1847 |       99.03 |            0.76 |
+
+#### feature/native-comp (323200044f0c3f716f8f78a6f5e39349fe039117)
+
+| test               | non-gc avg (s) | gc avg (s) | gcs avg | tot avg (s) | tot avg err (s) |
+|--------------------|----------------|------------|---------|-------------|-----------------|
+| bubble-no-cons     |           2.21 |       0.01 |       1 |        2.23 |            0.01 |
+| bubble             |           1.42 |       0.14 |       1 |        1.56 |            0.03 |
+| dhrystone          |           2.54 |       0.00 |       0 |        2.54 |            0.04 |
+| fibn-rec           |           0.00 |       0.00 |       0 |        0.00 |            0.00 |
+| fibn-tc            |           0.01 |       0.00 |       0 |        0.01 |            0.00 |
+| fibn               |           0.00 |       0.00 |       0 |        0.00 |            0.00 |
+| flet               |           1.99 |       0.00 |       0 |        1.99 |            0.01 |
+| inclist-type-hints |           0.71 |       0.00 |       0 |        0.71 |            0.02 |
+| inclist            |           1.35 |       0.00 |       0 |        1.35 |            0.01 |
+| listlen-tc         |           0.14 |       0.00 |       0 |        0.14 |            0.00 |
+| map-closure        |           6.35 |       0.00 |       0 |        6.35 |            0.05 |
+| nbody              |           1.49 |       0.30 |       1 |        1.78 |            0.02 |
+| pcase              |           1.79 |       0.00 |       0 |        1.79 |            0.01 |
+| pidigits           |          11.49 |       3.14 |       1 |       14.62 |            0.07 |
+|--------------------|----------------|------------|---------|-------------|-----------------|
+| total              |          31.48 |       3.59 |       4 |       35.08 |            0.10 |
