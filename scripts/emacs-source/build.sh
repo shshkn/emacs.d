@@ -46,13 +46,11 @@ done
 BRANCH_SUB=${BRANCH//\//_}
 SOURCE="$TARGET_DIR/emacs-source-$BRANCH_SUB"
 PREFIX="$TARGET_DIR/emacs-bin-$BRANCH_SUB"
-
-INFO=$PREFIX/share/info/emacs
 NS_APP=$PREFIX/bin/Emacs.app
 
 if [[ ! -d $SOURCE ]]; then
   git clone --depth 100 --branch "$BRANCH" "$EMACS_GIT_URL" "$SOURCE"
-else
+elif [[ $CONFIGURE ]]; then
   cd "$SOURCE" || exit
   git clean -fdx
   git pull
@@ -64,9 +62,7 @@ function configure_build() {
   [[ ! -x "$SOURCE/configure"  ]] && ./autogen.sh
 
   _args=(
-    "-C"
-    "--infodir=${INFO}"
-    "--prefix=${PREFIX}"
+    "--prefix=$PREFIX"
     "--without-all"
     "--without-pop"
     "--with-xml2"
@@ -86,6 +82,7 @@ function configure_build() {
     darwin*)
       _args+=("--with-ns"
               "--enable-ns-self-contained"
+              "--with-xwidgets"
              )
       ;;
     *)
@@ -121,7 +118,7 @@ function build() {
 
   if [[ $BRANCH == "feature/native-comp" ]]; then
     [[ $BYTE_COMPILE_EXTRA_FLAGS ]] && _make_flags+=("BYTE_COMPILE_EXTRA_FLAGS=$BYTE_COMPILE_EXTRA_FLAGS")
-    _make_flags+=("bindir=$SOURCE/nextstep/Emacs.app/Contents/MacOS")
+    [[ $OSTYPE =~ "darwin" ]] && _make_flags+=("bindir=$SOURCE/nextstep/Emacs.app/Contents/MacOS")
   fi
 
   make -j"$NCPU" "${_make_flags[@]}"
@@ -141,7 +138,7 @@ function install() {
       rm -r "$NS_APP"
       rm /usr/local/bin/emacs /usr/local/bin/emacsclient
 
-      cp -r "$SOURCE/nextstep/Emacs.app" "$NS_APP" && echo "$NS_APP"
+      cp -r -p "$SOURCE/nextstep/Emacs.app" "$NS_APP" && echo "$NS_APP"
 
       if [[ $FEATURES =~ "--disable-ns-self-contained" ]]; then
         ln -sfv "$PREFIX/bin/emacs" /usr/local/bin/emacs
@@ -175,8 +172,10 @@ function install() {
       done
 
       rm -v "$HOME/.local/bin/emacs" "$HOME/.local/bin/emacsclient"
-      ln -sv "$PREFIX/bin/emacs" "$HOME/.local/bin/emacs"
       ln -sv "$PREFIX/bin/emacsclient" "$HOME/.local/bin/emacsclient"
+      echo -e "#!/usr/bin/env bash\\n\\nexec $PREFIX/bin/emacs \$@" \
+           > "$HOME/.local/bin/emacs"
+      chmod -v u+x "$HOME/.local/bin/emacs"
 
       mkdir -pv "$HOME/.local/share/icons"
       cp -fv "$ICON_PATH" "$HOME/.local/share/icons/emacs.png"
