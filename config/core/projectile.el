@@ -8,7 +8,6 @@
         projectile-indexing-method 'alien
         projectile-known-projects-file (expand-file-name "projectile-projects" ds-dir-data-user)
         projectile-cache-file (expand-file-name "projectile-cache" ds-dir-data-user)
-        projectile-completion-system 'ivy
         projectile-require-project-root 'prompt
         projectile-globally-ignored-files '("TAGS" ".DS_Store")
         projectile-globally-ignored-file-suffixes '(".bin" ".o" ".elc" ".pyc"))

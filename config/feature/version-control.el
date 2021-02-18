@@ -17,8 +17,7 @@
          ("RET" . magit-diff-visit-file-other-window))
   :init
   (setq magit-diff-options '("-b")
-        magit-process-popup-time 10
-        magit-completing-read-function #'ivy-completing-read)
+        magit-process-popup-time 10)
   (setq transient-history-file (expand-file-name "transient/history.el" ds-dir-data-user)))
 
 (use-package magit-todos

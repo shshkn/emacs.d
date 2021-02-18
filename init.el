@@ -26,8 +26,6 @@
     "feature/yasnippet.el"
     "feature/expand-region.el"
     "feature/helpful.el"
-    "feature/dash-zeal.el"
-    "feature/dumb-jump.el"
     "feature/company.el"
     "feature/lsp.el"
     "feature/term.el"

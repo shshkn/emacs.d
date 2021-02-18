@@ -99,7 +99,7 @@
 
 (setq create-lockfiles nil)
 
-(setq find-file-visit-truename t)
+(setq find-file-visit-truename nil)
 (setq vc-follow-symlinks t)
 
 (setq tramp-default-method "sudo"

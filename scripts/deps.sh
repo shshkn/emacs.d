@@ -67,8 +67,7 @@ if command -v xbps-install; then
   fi
 fi
 
-# pip3 install --user 'python-language-server[all]'
-pip3 install --user 'python-language-server[all]==0.31.7'
+pip install --user 'python-language-server[all]'
 
 raco pkg install --auto -u errortrace macro-debugger
 
@@ -78,9 +77,6 @@ if command -v nvm; then
   npm install -g javascript-typescript-langserver
   npm install -g vscode-html-languageserver-bin
   npm install -g vscode-css-languageserver-bin
-
-  npm install -g elm elm-test elm-format
-  npm install -g @elm-tooling/elm-language-server
 
 fi
 

@@ -13,10 +13,3 @@
   :init
   (setq ispell-silently-savep t
         ispell-local-dictionary "en_US"))
-
-(use-package flyspell-correct-ivy
-  :after flyspell
-  :commands (flyspell-correct-word-generic
-             flyspell-correct-previous-word-generic)
-  :bind (:map flyspell-mode-map
-              ("C-," . flyspell-correct-at-point)))

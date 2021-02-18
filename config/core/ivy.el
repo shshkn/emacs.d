@@ -87,11 +87,6 @@
 (use-package wgrep
   :no-require t)
 
-(use-package ivy-xref
-  :after ivy
-  :init
-  (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
-
 (use-package prescient
   :defer t
   :init

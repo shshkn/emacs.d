@@ -1,7 +1,7 @@
 ;; -*- lexical-binding: t -*-
 
 (use-package imenu-anywhere
-  :bind (("C-." . ivy-imenu-anywhere)))
+  :bind (("C-." . imenu-anywhere)))
 
 (use-package imenu-list
   :bind (("C-'" . imenu-list-smart-toggle)

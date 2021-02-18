@@ -3,29 +3,6 @@
 (use-package base16-theme
   :no-require t)
 
-(use-package grayscale-theme
-  :no-require t
-  :init
-  (defun update-grayscale-theme-faces-hook-fn (theme color)
-    (when (eq theme 'grayscale)
-      (set-face-attribute 'ivy-current-match nil :background "#ACACAC")
-      (set-face-attribute 'ivy-prompt-match nil :background "#ACACAC")))
-  (add-hook 'ds-after-theme-enable-hook #'update-grayscale-theme-faces-hook-fn))
-
-(use-package acme-theme
-  :no-require t
-  :init
-  (defun update-acme-theme-faces-hook-fn (theme color)
-    (when (eq theme 'acme)
-      (when (facep 'org-link)
-        (set-face-attribute 'org-link nil :underline nil)
-        (set-face-attribute 'org-level-1 nil :overline nil)
-        (set-face-attribute 'org-level-2 nil :overline nil)
-        (set-face-attribute 'org-level-3 nil :overline nil)
-        (set-face-attribute 'org-todo nil :box nil)
-        (set-face-attribute 'org-done nil :box nil))))
-  (add-hook 'ds-after-theme-enable-hook #'update-acme-theme-faces-hook-fn))
-
 (use-package doom-themes
   :no-require t
   :init
@@ -48,26 +25,6 @@
   (set-face-attribute 'line-number-current-line nil :inverse-video nil))
 (add-hook 'ds-after-theme-enable-hook #'update-mode-line-hook-fn)
 
-(defun update-all-the-icons-grayscale-hook-fn (theme color)
-  (if (or (eq theme 'base16-grayscale-dark)
-          (eq theme 'base16-grayscale-light)
-          (eq theme 'grayscale))
-      (setq all-the-icons-color-icons nil)
-    (setq all-the-icons-color-icons t))
-  (when (featurep 'all-the-icons)
-    (memoize-restore 'all-the-icons-icon-for-file)
-    (memoize-restore 'all-the-icons-icon-for-mode)
-    (memoize-restore 'all-the-icons-icon-for-url)
-    (memoize 'all-the-icons-icon-for-file)
-    (memoize 'all-the-icons-icon-for-mode)
-    (memoize 'all-the-icons-icon-for-url)
-    (when (and (featurep 'dired-sidebar) (dired-sidebar-showing-sidebar-p))
-      (dired-sidebar-redisplay-icons))
-    (when (get-buffer "*Ibuffer*")
-      (with-current-buffer "*Ibuffer*"
-        (ibuffer-update nil)))))
-(add-hook 'ds-after-theme-enable-hook #'update-all-the-icons-grayscale-hook-fn)
-
 (defun update-lsp-ui-sideline-face-hook-fn (theme color)
   (when (and (eq color 'light)
              (facep 'lsp-ui-sideline-code-action)
@@ -75,18 +32,6 @@
     (set-face-attribute 'lsp-ui-sideline-code-action nil :foreground (face-foreground 'font-lock-string-face))))
 (add-hook 'lsp-mode-hook (apply-partially #'update-lsp-ui-sideline-face-hook-fn nil 'light))
 (add-hook 'ds-after-theme-enable-hook #'update-lsp-ui-sideline-face-hook-fn)
-
-(defun update-org-bullets-face-hook-fn (theme color)
-  (when (facep 'org-level-8)
-    (set-face-attribute 'org-level-1 nil :height 1.0 :width 'condensed :inherit 'unspecified)
-    (set-face-attribute 'org-level-2 nil :height 1.0 :width 'condensed :inherit 'unspecified)
-    (set-face-attribute 'org-level-3 nil :height 1.0 :width 'condensed :inherit 'unspecified)
-    (set-face-attribute 'org-level-4 nil :height 1.0 :width 'condensed :inherit 'unspecified)
-    (set-face-attribute 'org-level-5 nil :height 1.0 :width 'condensed :inherit 'unspecified)
-    (set-face-attribute 'org-level-6 nil :height 1.0 :width 'condensed :inherit 'unspecified)
-    (set-face-attribute 'org-level-7 nil :height 1.0 :width 'condensed :inherit 'unspecified)
-    (set-face-attribute 'org-level-8 nil :height 1.0 :width 'condensed :inherit 'unspecified)))
-(add-hook 'ds-after-theme-enable-hook #'update-org-bullets-face-hook-fn)
 
 (defun update-left-border-face-hook-fn (theme color)
   (set-face-attribute 'vertical-border nil
@@ -136,19 +81,3 @@
                 flymake-diagnostics-buffer-mode-hook
                 use-package-statistics-mode-hook))
   (add-hook hook #'ds--custom-set-helper-buffer-face-hook-fn))
-
-;; Watch for macOS appearance changes
-(defun ds--macos-watcher-start ()
-  "Starts watcher. Returns timer."
-  (when os-is-mac
-    (run-with-timer 0 300 #'ds--macos-theme-check)))
-
-(defun ds--macos-theme-check ()
-  (async-start (lambda ()
-                 (shell-command "defaults read -g AppleInterfaceStyle"))
-               (lambda (exit-code)
-                 (if (eq 1 exit-code) (light) (dark)))))
-
-;; not with "auto"
-;; (setq ds--macos-theme-watcher-timer (ds--macos-watcher-start))
-;; (cancel-timer ds--macos-theme-watcher-timer)
