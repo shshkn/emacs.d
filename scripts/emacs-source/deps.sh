@@ -36,6 +36,7 @@ case $OSTYPE in
       sudo apt update
       sudo apt install \
            build-essential \
+           autoconf \
            texinfo \
            libx11-dev \
            libxpm-dev \
@@ -46,6 +47,7 @@ case $OSTYPE in
            libgtk-3-dev \
            libcairo2-dev \
            libharfbuzz-dev \
+           libjansson-dev \
            libncurses5-dev \
            libgnutls28-dev
     fi
